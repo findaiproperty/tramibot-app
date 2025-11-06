@@ -1,16 +1,15 @@
 import streamlit as st
-import requests
-import time
 import datetime
+import json
 
 # Page configuration
 st.set_page_config(
-    page_title="Tramibot - Free Appointment Alerts",
+    page_title="Tramibot - Spanish Procedures Assistant",
     page_icon="🚀",
-    layout="centered"
+    layout="wide"
 )
 
-# Custom CSS with DARK TEXT for readability
+# Custom CSS for professional look
 st.markdown("""
 <style>
     .main-header {
@@ -19,31 +18,13 @@ st.markdown("""
         text-align: center;
         margin-bottom: 1rem;
     }
-    .status-online {
-        padding: 20px;
-        background-color: #d4edda;
-        border: 2px solid #c3e6cb;
-        border-radius: 10px;
-        text-align: center;
-        margin: 20px 0;
-        color: #155724 !important;  /* DARK GREEN TEXT */
-    }
-    .status-offline {
-        padding: 20px;
-        background-color: #f8d7da;
-        border: 2px solid #f5c6cb;
-        border-radius: 10px;
-        text-align: center;
-        margin: 20px 0;
-        color: #721c24 !important;  /* DARK RED TEXT */
-    }
-    .instruction-box {
+    .feature-card {
         padding: 25px;
-        background-color: #f0f8ff;
-        border: 2px solid #b3d9ff;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
         border-radius: 10px;
-        margin: 20px 0;
-        color: #000000 !important;  /* BLACK TEXT */
+        margin: 15px 0;
+        height: 100%;
     }
     .step-number {
         background-color: #007bff;
@@ -57,179 +38,272 @@ st.markdown("""
         margin-right: 10px;
         font-weight: bold;
     }
-    .dark-text {
-        color: #000000 !important;  /* FORCE BLACK TEXT */
+    .success-story {
+        background-color: #e7f3ff;
+        border-left: 4px solid #007bff;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 5px;
     }
-    .instruction-box h3, .instruction-box h4, .instruction-box strong {
-        color: #000000 !important;  /* BLACK HEADERS */
-    }
-    .instruction-box a {
-        color: #0066cc !important;  /* BLUE LINKS */
-        font-weight: bold;
+    .office-card {
+        background-color: #fff3cd;
+        border: 1px solid #ffeaa7;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # Header
 st.markdown('<div class="main-header">🚀 Tramibot</div>', unsafe_allow_html=True)
-st.subheader("Free Spanish Appointment Alerts")
-
-# Initialize session state
-if 'last_checked' not in st.session_state:
-    st.session_state.last_checked = "Never"
-if 'system_status' not in st.session_state:
-    st.session_state.system_status = "unknown"
-
-def check_appointment_system():
-    """Check if the appointment system homepage is accessible"""
-    try:
-        response = requests.get(
-            'https://sede.administracionespublicas.gob.es',
-            timeout=10
-        )
-        return response.status_code == 200
-    except:
-        return False
+st.markdown("### Your Legal Assistant for Spanish Bureaucracy")
+st.markdown("*100% legal educational platform - No automated system access*")
 
 # Navigation
-st.sidebar.title("🚀 Tramibot Navigation")
-st.sidebar.page_link("app.py", label="🏠 Home - Appointment Checker")
+st.sidebar.title("🧭 Navigation")
+st.sidebar.page_link("app.py", label="🏠 Home Dashboard")
 st.sidebar.page_link("pages/1_📋_Procedures_Guide.py", label="📋 Procedures Guide") 
-st.sidebar.page_link("pages/2_🔄_Live_Updates.py", label="🔄 Live Updates")
+st.sidebar.page_link("pages/2_🤝_Community.py", label="🤝 Community Reports")
 
-# Main dashboard
-st.markdown("### 🔍 Check System Status")
-
-col1, col2 = st.columns([2, 1])
-with col1:
-    if st.button("**Check if System is Online**", use_container_width=True, type="primary"):
-        with st.spinner("Checking official system..."):
-            is_online = check_appointment_system()
-            st.session_state.system_status = "online" if is_online else "offline"
-            st.session_state.last_checked = datetime.datetime.now().strftime("%H:%M:%S")
-
-# Display status
-if st.session_state.system_status == "online":
-    st.markdown(
-        f'<div class="status-online">'
-        f'<h3 style="color: #155724;">✅ SYSTEM ONLINE</h3>'
-        f'<p style="color: #155724;">The official appointment system is accessible!</p>'
-        f'<p style="color: #155724;"><strong>Best time to check:</strong> Right now!</p>'
-        f'<small style="color: #155724;">Last checked: {st.session_state.last_checked}</small>'
-        f'</div>',
-        unsafe_allow_html=True
-    )
-    st.balloons()
-    
-elif st.session_state.system_status == "offline":
-    st.markdown(
-        f'<div class="status-offline">'
-        f'<h3 style="color: #721c24;">❌ SYSTEM OFFLINE</h3>'
-        f'<p style="color: #721c24;">The official system may be down for maintenance</p>'
-        f'<small style="color: #721c24;">Last checked: {st.session_state.last_checked}</small>'
-        f'</div>',
-        unsafe_allow_html=True
-    )
-else:
-    st.info("👆 Click the button above to check if the appointment system is online")
-
-# Instructions - CLEAN WITH DARK TEXT
+# Three Pillars Dashboard
 st.markdown("---")
-st.markdown("## 📋 How to Book Appointments")
+st.markdown("## 🎯 Your Three-Part Solution")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.markdown("""
+    <div class="feature-card">
+        <h3>📚 Option 1: Manual Status Guide</h3>
+        <p><strong>Know exactly when and how to check</strong></p>
+        <ul>
+            <li>Best times for each office</li>
+            <li>Step-by-step checking process</li>
+            <li>Document preparation guides</li>
+            <li>Office-specific strategies</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col2:
+    st.markdown("""
+    <div class="feature-card">
+        <h3>🤝 Option 2: Community Reporting</h3>
+        <p><strong>Learn from others' success</strong></p>
+        <ul>
+            <li>Real user success stories</li>
+            <li>Recent appointment findings</li>
+            <li>Pattern identification</li>
+            <li>Crowdsourced best times</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+with col3:
+    st.markdown("""
+    <div class="feature-card">
+        <h3>🎓 Option 3: Educational Platform</h3>
+        <p><strong>Master the process</strong></p>
+        <ul>
+            <li>Complete procedure guides</li>
+            <li>Document preparation help</li>
+            <li>Legal requirement overviews</li>
+            <li>Professional referrals</li>
+        </ul>
+    </div>
+    """, unsafe_allow_html=True)
+
+# OPTION 1: Manual Status Guide
+st.markdown("---")
+st.markdown("## 📚 Manual Status Guide")
 
 st.markdown("""
-<div class="instruction-box dark-text">
-<h3 style="color: #d9534f !important; margin-top: 0;">🚨 Important: You must book manually</h3>
+### 🎯 Best Times to Check Manually
 
-<div style="margin: 20px 0; color: #000000 !important;">
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000 !important;">
+Based on historical patterns and community reports:
+""")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.markdown("""
+    **🕗 Morning Windows:**
+    - Monday-Friday: 8:00-10:00 AM
+    - Tuesday-Thursday: Most reliable
+    - First weekday of month: Highest availability
+    
+    **📍 Barcelona Offices:**
+    - Police (Via Júlia): 8:15-9:00 AM
+    - Extranjería: 9:00-10:00 AM
+    """)
+
+with col2:
+    st.markdown("""
+    **🕑 Afternoon Windows:**
+    - Tuesday-Thursday: 2:00-4:00 PM  
+    - Some offices release cancellations
+    - Less competitive than mornings
+    
+    **🏛️ Other Cities:**
+    - Girona: 8:45 AM consistently
+    - Tarragona: 9:00 AM & 4:00 PM
+    - Lleida: 8:30 AM daily
+    """)
+
+# Quick Action Section
+st.markdown("### ⚡ Ready to Check?")
+st.markdown("""
+<div style="background-color: #e7f3ff; padding: 20px; border-radius: 10px;">
+<h4>🚨 Manual Checking Process:</h4>
+
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
     <div class="step-number">1</div>
-    <div style="color: #000000 !important;">
-        <strong style="color: #000000 !important;">Go to the official website:</strong><br>
-        <a href="https://sede.administracionespublicas.gob.es" target="_blank" style="color: #0066cc !important; font-weight: bold; font-size: 1.1em;">
-        https://sede.administracionespublicas.gob.es
-        </a>
+    <div>
+        <strong>Click the official link below</strong><br>
+        You'll be redirected to the government portal
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000 !important;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
     <div class="step-number">2</div>
-    <div style="color: #000000 !important;">
-        <strong style="color: #000000 !important;">Navigate manually:</strong><br>
-        <span style="color: #000000 !important;">• Click "Acceso al sistema de Cita Previa"</span><br>
-        <span style="color: #000000 !important;">• Select "Policía - Certificados UE"</span><br>
-        <span style="color: #000000 !important;">• Choose your province (Barcelona, Girona, etc.)</span><br>
-        <span style="color: #000000 !important;">• Follow the step-by-step process</span>
+    <div>
+        <strong>Navigate manually through the system</strong><br>
+        Select your procedure and province
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000 !important;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
     <div class="step-number">3</div>
-    <div style="color: #000000 !important;">
-        <strong style="color: #000000 !important;">Best times to check:</strong><br>
-        <span style="color: #000000 !important;">• 🕗 8:00-10:00 AM (Monday-Friday)</span><br>
-        <span style="color: #000000 !important;">• 🕑 2:00-4:00 PM (Tuesday-Thursday)</span><br>
-        <span style="color: #000000 !important;">• 📅 First weekday of each month</span>
+    <div>
+        <strong>Check for available time slots</strong><br>
+        Be prepared to book immediately if you find one
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; color: #000000 !important;">
+<div style="display: flex; align-items: flex-start;">
     <div class="step-number">4</div>
-    <div style="color: #000000 !important;">
-        <strong style="color: #000000 !important;">Have these ready:</strong><br>
-        <span style="color: #000000 !important;">• Passport/NIE number</span><br>
-        <span style="color: #000000 !important;">• Complete personal details</span><br>
-        <span style="color: #000000 !important;">• Email and phone number</span>
+    <div>
+        <strong>Report your success to help others!</strong><br>
+        Share what worked in our community section
     </div>
-</div>
 </div>
 </div>
 """, unsafe_allow_html=True)
 
-# Office tips
+# Official Links
+st.markdown("### 🌐 Official Government Portals")
+official_col1, official_col2, official_col3 = st.columns(3)
+
+with official_col1:
+    st.link_button("🎯 National Appointment System", 
+                  "https://sede.administracionespublicas.gob.es")
+
+with official_col2:
+    st.link_button("📝 Ministry of Immigration", 
+                  "https://extranjeros.inclusion.gob.es")
+
+with official_col3:
+    st.link_button("📄 Official Forms & Fees", 
+                  "https://sede.policia.gob.es")
+
+# OPTION 2: Community Reports (Initial Version)
 st.markdown("---")
-st.markdown("## 📍 Office-Specific Tips")
+st.markdown("## 🤝 Community Reports")
 
-office = st.selectbox(
-    "Select your office:",
-    ["Barcelona Police (Via Júlia)", "Barcelona Extranjería", "Girona", "Tarragona", "Lleida"]
-)
-
-if office == "Barcelona Police (Via Júlia)":
-    st.success("**Best times:** 8:15-9:00 AM on weekdays")
-elif office == "Barcelona Extranjería":
-    st.success("**Best times:** Tuesday/Thursday mornings")
-elif office == "Girona":
-    st.success("**Best times:** 8:45 AM daily")
-elif office == "Tarragona":
-    st.success("**Best times:** 9:00 AM and 4:00 PM")
-else:
-    st.success("**Best times:** Weekday mornings 8:00-10:00 AM")
-
-# Quick actions
-st.markdown("---")
-st.markdown("## ⚡ Quick Actions")
-
-col1, col2 = st.columns(2)
-with col1:
-    if st.button("🔄 Check Status Again"):
-        st.rerun()
-        
-with col2:
-    st.link_button("🌐 Open Official Website", "https://sede.administracionespublicas.gob.es")
-
-# Legal disclaimer
-st.markdown("---")
-st.error("""
-**Legal Disclaimer:** This tool only checks if the official appointment system homepage is accessible. 
-Users must manually navigate and book appointments themselves. We do not automate bookings, 
-bypass security measures, or provide legal advice.
+st.markdown("""
+### 📊 Recent Success Stories
+*Community-driven insights - be the first to contribute!*
 """)
 
-# Refresh note
+# Placeholder for community content
+st.info("""
+**🚧 Community Building in Progress**  
+As more users join and share their experiences, this section will show:
+- Real success stories with timestamps
+- Patterns of when appointments are found  
+- Office-specific success rates
+- User tips and strategies
+
+**Be a pioneer!** Visit the Community page to share your first success story.
+""")
+
+# Sample success stories (will be replaced with real data)
+st.markdown("#### 💡 Sample Success Patterns (Based on General Knowledge)")
+
+success_col1, success_col2 = st.columns(2)
+
+with success_col1:
+    st.markdown("""
+    <div class="success-story">
+    <strong>Barcelona Police (Via Júlia)</strong><br>
+    ⏰ Most success: Tuesday 8:30 AM<br>
+    📅 Best results: First week of month<br>
+    🎯 Strategy: Check right at 8:15 AM
+    </div>
+    """, unsafe_allow_html=True)
+
+with success_col2:
+    st.markdown("""
+    <div class="success-story">
+    <strong>Girona Office</strong><br>
+    ⏰ Most success: Weekdays 8:45 AM<br>
+    📅 Consistent morning releases<br>
+    🎯 Strategy: Daily checking at opening
+    </div>
+    """, unsafe_allow_html=True)
+
+# OPTION 3: Educational Platform Teaser
+st.markdown("---")
+st.markdown("## 🎓 Educational Resources")
+
+st.markdown("""
+### Master the Paperwork Process
+Visit our Procedures Guide for complete step-by-step instructions for:
+""")
+
+edu_col1, edu_col2, edu_col3 = st.columns(3)
+
+with edu_col1:
+    st.markdown("""
+    **📄 NIE Applications**
+    - First-time NIE (EX-15)
+    - NIE renewal process
+    - Required documents
+    - Fee payment guide
+    """)
+
+with edu_col2:
+    st.markdown("""
+    **🏠 Residence Procedures**  
+    - TIE card application
+    - EU registration
+    - Family reunification
+    - Student residence
+    """)
+
+with edu_col3:
+    st.markdown("""
+    **📍 Local Registration**
+    - Empadronamiento
+    - Social security number
+    - Health card registration
+    - Driver's license exchange
+    """)
+
+# Legal Disclaimer
+st.markdown("---")
+st.error("""
+**Legal Disclaimer:** Tramibot is an educational and informational platform. We do not automate any government processes, 
+access appointment systems programmatically, or provide legal advice. All appointment booking must be done manually 
+by users through official government portals. We connect users with licensed professionals for legal matters.
+""")
+
+# Call to Action
 st.markdown("---")
 st.markdown("""
-<div style="text-align: center; color: #666; font-size: 0.9em;">
-🔄 This page updates automatically every 5 minutes
+<div style="text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 10px;">
+<h3>Ready to Get Started?</h3>
+<p>Choose your path above or explore our detailed procedures guide!</p>
 </div>
 """, unsafe_allow_html=True)
