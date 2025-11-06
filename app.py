@@ -9,10 +9,15 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS with PROPER DARK TEXT on all elements
+# Clean CSS with white background and light blue boxes
 st.markdown("""
 <style>
-    /* Global text color enforcement */
+    /* Main background - clean white */
+    .main {
+        background-color: #ffffff;
+    }
+    
+    /* Main header */
     .main-header {
         font-size: 2.5rem;
         color: #1f77b4;
@@ -20,20 +25,35 @@ st.markdown("""
         margin-bottom: 1rem;
     }
     
-    /* Feature cards with dark text */
+    /* Light blue feature cards */
     .feature-card {
         padding: 25px;
-        background-color: #f8f9fa;
-        border: 1px solid #dee2e6;
+        background-color: #e6f3ff;
+        border: 1px solid #b3d9ff;
         border-radius: 10px;
         margin: 15px 0;
         height: 100%;
+        color: #000000;
     }
-    .feature-card h3, .feature-card p, .feature-card li, .feature-card strong {
-        color: #000000 !important;
+    
+    /* Light blue instruction boxes */
+    .instruction-box {
+        background-color: #e6f3ff;
+        padding: 20px;
+        border-radius: 10px;
+        border: 1px solid #b3d9ff;
+        color: #000000;
+        margin: 15px 0;
     }
-    .feature-card ul {
-        color: #000000 !important;
+    
+    /* Light blue success stories */
+    .success-story {
+        background-color: #e6f3ff;
+        border: 1px solid #b3d9ff;
+        padding: 15px;
+        margin: 10px 0;
+        border-radius: 8px;
+        color: #000000;
     }
     
     /* Step numbers */
@@ -50,56 +70,40 @@ st.markdown("""
         font-weight: bold;
     }
     
-    /* Success stories */
-    .success-story {
-        background-color: #e7f3ff;
-        border-left: 4px solid #007bff;
-        padding: 15px;
-        margin: 10px 0;
-        border-radius: 5px;
-    }
-    .success-story, .success-story strong, .success-story span {
-        color: #000000 !important;
-    }
-    
-    /* Instruction boxes */
-    .instruction-box {
-        background-color: #e7f3ff;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #b3d9ff;
-    }
-    .instruction-box, .instruction-box h4, .instruction-box div {
-        color: #000000 !important;
-    }
-    
-    /* Donation section */
+    /* Donation box */
     .donation-box {
-        background-color: #f8f9fa;
+        background-color: #e6f3ff;
         padding: 25px;
         border-radius: 10px;
         margin: 20px 0;
-        border: 1px solid #dee2e6;
-    }
-    .donation-box, .donation-box h3, .donation-box p, .donation-box li {
-        color: #000000 !important;
+        border: 1px solid #b3d9ff;
+        color: #000000;
     }
     
-    /* Force dark text everywhere */
+    /* Legal info box */
+    .legal-box {
+        background-color: #fff3cd;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 20px 0;
+        border: 1px solid #ffeaa7;
+        color: #000000;
+    }
+    
+    /* Force black text everywhere */
     .stMarkdown, .stMarkdown p, .stMarkdown li, .stMarkdown ul, .stMarkdown ol {
         color: #000000 !important;
     }
     
-    /* Ensure Streamlit native elements have dark text */
-    div[data-testid="stMarkdownContainer"] p, 
-    div[data-testid="stMarkdownContainer"] li,
-    div[data-testid="stMarkdownContainer"] ul {
+    /* Ensure all text is black */
+    div[data-testid="stMarkdownContainer"] {
         color: #000000 !important;
     }
     
     /* Links */
     a {
         color: #0066cc !important;
+        font-weight: bold;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -124,7 +128,7 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div class="feature-card">
-        <h3>📚 Option 1: Manual Status Guide</h3>
+        <h3>📚 Manual Status Guide</h3>
         <p><strong>Know exactly when and how to check</strong></p>
         <ul>
             <li>Best times for each office</li>
@@ -138,7 +142,7 @@ with col1:
 with col2:
     st.markdown("""
     <div class="feature-card">
-        <h3>🤝 Option 2: Community Reporting</h3>
+        <h3>🤝 Community Reporting</h3>
         <p><strong>Learn from others' success</strong></p>
         <ul>
             <li>Real user success stories</li>
@@ -152,7 +156,7 @@ with col2:
 with col3:
     st.markdown("""
     <div class="feature-card">
-        <h3>🎓 Option 3: Educational Platform</h3>
+        <h3>🎓 Educational Platform</h3>
         <p><strong>Master the process</strong></p>
         <ul>
             <li>Complete procedure guides</li>
@@ -163,7 +167,7 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
-# OPTION 1: Manual Status Guide
+# Manual Status Guide Section
 st.markdown("---")
 st.markdown("## 📚 Manual Status Guide")
 
@@ -203,7 +207,7 @@ with col2:
 st.markdown("### ⚡ Ready to Check?")
 st.markdown("""
 <div class="instruction-box">
-<h4>🚨 Manual Checking Process:</h4>
+<h4>🚨 Manual Checking Process</h4>
 
 <div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
     <div class="step-number">1</div>
@@ -255,7 +259,7 @@ with official_col3:
     st.link_button("📄 Official Forms & Fees", 
                   "https://sede.policia.gob.es")
 
-# OPTION 2: Community Reports
+# Community Reports Section
 st.markdown("---")
 st.markdown("## 🤝 Community Reports")
 
@@ -267,17 +271,11 @@ st.markdown("""
 # Placeholder for community content
 st.info("""
 **🚧 Community Building in Progress**  
-As more users join and share their experiences, this section will show:
-- Real success stories with timestamps
-- Patterns of when appointments are found  
-- Office-specific success rates
-- User tips and strategies
-
-**Be a pioneer!** Visit the Community page to share your first success story.
+As more users join and share their experiences, this section will show real success stories and patterns.
 """)
 
 # Sample success stories
-st.markdown("#### 💡 Sample Success Patterns (Based on General Knowledge)")
+st.markdown("#### 💡 Sample Success Patterns")
 
 success_col1, success_col2 = st.columns(2)
 
@@ -301,7 +299,7 @@ with success_col2:
     </div>
     """, unsafe_allow_html=True)
 
-# OPTION 3: Educational Platform
+# Educational Resources Section
 st.markdown("---")
 st.markdown("## 🎓 Educational Resources")
 
@@ -314,37 +312,49 @@ edu_col1, edu_col2, edu_col3 = st.columns(3)
 
 with edu_col1:
     st.markdown("""
-    **📄 NIE Applications**
-    - First-time NIE (EX-15)
-    - NIE renewal process
-    - Required documents
-    - Fee payment guide
-    """)
+    <div class="feature-card">
+    <h4>📄 NIE Applications</h4>
+    <ul>
+        <li>First-time NIE (EX-15)</li>
+        <li>NIE renewal process</li>
+        <li>Required documents</li>
+        <li>Fee payment guide</li>
+    </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
 with edu_col2:
     st.markdown("""
-    **🏠 Residence Procedures**  
-    - TIE card application
-    - EU registration
-    - Family reunification
-    - Student residence
-    """)
+    <div class="feature-card">
+    <h4>🏠 Residence Procedures</h4>
+    <ul>
+        <li>TIE card application</li>
+        <li>EU registration</li>
+        <li>Family reunification</li>
+        <li>Student residence</li>
+    </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
 with edu_col3:
     st.markdown("""
-    **📍 Local Registration**
-    - Empadronamiento
-    - Social security number
-    - Health card registration
-    - Driver's license exchange
-    """)
+    <div class="feature-card">
+    <h4>📍 Local Registration</h4>
+    <ul>
+        <li>Empadronamiento</li>
+        <li>Social security number</li>
+        <li>Health card registration</li>
+        <li>Driver's license exchange</li>
+    </ul>
+    </div>
+    """, unsafe_allow_html=True)
 
-# DONATION SECTION
+# Donation Section
 st.markdown("---")
 st.markdown("""
 <div class="donation-box">
 <h3 style="text-align: center;">☕ Support This Project</h3>
-<p style="text-align: center;">If Tramibot has helped you navigate Spanish bureaucracy, consider supporting its development and maintenance.</p>
+<p style="text-align: center;">If Tramibot has helped you navigate Spanish bureaucracy, consider supporting its development.</p>
 
 <div style="text-align: center; margin: 25px 0;">
     <a href="https://ko-fi.com/tramibot" target="_blank" style="background-color: #29abe0; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; font-weight: bold; margin: 5px;">
@@ -355,7 +365,7 @@ st.markdown("""
     </a>
 </div>
 
-<div style="background-color: #e7f3ff; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #b3d9ff;">
+<div style="background-color: #ffffff; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #b3d9ff;">
 <h4 style="margin-top: 0;">What Your Support Enables:</h4>
 <ul style="margin-bottom: 0;">
     <li>Server and hosting costs</li>
@@ -367,16 +377,15 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Legal disclaimers for donations
+# Legal Information
 st.markdown("""
-<div style="background-color: #fff3cd; padding: 15px; border-radius: 8px; margin: 10px 0; border: 1px solid #ffeaa7;">
-<h4 style="margin-top: 0;">📋 Important Legal Information</h4>
-<div style="font-size: 0.9em;">
+<div class="legal-box">
+<h4>📋 Important Legal Information</h4>
 <p><strong>Donation Nature:</strong></p>
 <ul>
     <li>Contributions are <strong>voluntary support</strong>, not payments for services</li>
-    <li>All core features of Tramibot remain <strong>completely free forever</strong></li>
-    <li>No premium features or paywalls will ever be added to current services</li>
+    <li>All core features remain <strong>completely free forever</strong></li>
+    <li>No premium features or paywalls will ever be added</li>
 </ul>
 
 <p><strong>Tax Compliance:</strong></p>
@@ -385,13 +394,6 @@ st.markdown("""
     <li>Donations under €3,000/year are considered personal support</li>
     <li>All income over legal thresholds will be properly declared</li>
 </ul>
-
-<p><strong>Service Guarantee:</strong></p>
-<ul>
-    <li>Donations do not entitle donors to special services or guarantees</li>
-    <li>Support is appreciated but never expected or required</li>
-</ul>
-</div>
 </div>
 """, unsafe_allow_html=True)
 
