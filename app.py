@@ -91,6 +91,12 @@ def check_appointment_system():
     except:
         return False
 
+# Navigation
+st.sidebar.title("🚀 Tramibot Navigation")
+st.sidebar.page_link("app.py", label="🏠 Home - Appointment Checker")
+st.sidebar.page_link("pages/1_📋_Procedures_Guide.py", label="📋 Procedures Guide") 
+st.sidebar.page_link("pages/2_🔄_Live_Updates.py", label="🔄 Live Updates")
+
 # Main dashboard
 st.markdown("### 🔍 Check System Status")
 
