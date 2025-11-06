@@ -10,7 +10,7 @@ st.set_page_config(
     layout="centered"
 )
 
-# Custom CSS for clean styling
+# Custom CSS with DARK TEXT for readability
 st.markdown("""
 <style>
     .main-header {
@@ -26,6 +26,7 @@ st.markdown("""
         border-radius: 10px;
         text-align: center;
         margin: 20px 0;
+        color: #155724 !important;  /* DARK GREEN TEXT */
     }
     .status-offline {
         padding: 20px;
@@ -34,6 +35,7 @@ st.markdown("""
         border-radius: 10px;
         text-align: center;
         margin: 20px 0;
+        color: #721c24 !important;  /* DARK RED TEXT */
     }
     .instruction-box {
         padding: 25px;
@@ -41,6 +43,7 @@ st.markdown("""
         border: 2px solid #b3d9ff;
         border-radius: 10px;
         margin: 20px 0;
+        color: #000000 !important;  /* BLACK TEXT */
     }
     .step-number {
         background-color: #007bff;
@@ -52,6 +55,16 @@ st.markdown("""
         align-items: center;
         justify-content: center;
         margin-right: 10px;
+        font-weight: bold;
+    }
+    .dark-text {
+        color: #000000 !important;  /* FORCE BLACK TEXT */
+    }
+    .instruction-box h3, .instruction-box h4, .instruction-box strong {
+        color: #000000 !important;  /* BLACK HEADERS */
+    }
+    .instruction-box a {
+        color: #0066cc !important;  /* BLUE LINKS */
         font-weight: bold;
     }
 </style>
@@ -93,10 +106,10 @@ with col1:
 if st.session_state.system_status == "online":
     st.markdown(
         f'<div class="status-online">'
-        f'<h3>✅ SYSTEM ONLINE</h3>'
-        f'<p>The official appointment system is accessible!</p>'
-        f'<p><strong>Best time to check:</strong> Right now!</p>'
-        f'<small>Last checked: {st.session_state.last_checked}</small>'
+        f'<h3 style="color: #155724;">✅ SYSTEM ONLINE</h3>'
+        f'<p style="color: #155724;">The official appointment system is accessible!</p>'
+        f'<p style="color: #155724;"><strong>Best time to check:</strong> Right now!</p>'
+        f'<small style="color: #155724;">Last checked: {st.session_state.last_checked}</small>'
         f'</div>',
         unsafe_allow_html=True
     )
@@ -105,62 +118,62 @@ if st.session_state.system_status == "online":
 elif st.session_state.system_status == "offline":
     st.markdown(
         f'<div class="status-offline">'
-        f'<h3>❌ SYSTEM OFFLINE</h3>'
-        f'<p>The official system may be down for maintenance</p>'
-        f'<small>Last checked: {st.session_state.last_checked}</small>'
+        f'<h3 style="color: #721c24;">❌ SYSTEM OFFLINE</h3>'
+        f'<p style="color: #721c24;">The official system may be down for maintenance</p>'
+        f'<small style="color: #721c24;">Last checked: {st.session_state.last_checked}</small>'
         f'</div>',
         unsafe_allow_html=True
     )
 else:
     st.info("👆 Click the button above to check if the appointment system is online")
 
-# Instructions - CLEAN AND READABLE
+# Instructions - CLEAN WITH DARK TEXT
 st.markdown("---")
 st.markdown("## 📋 How to Book Appointments")
 
 st.markdown("""
-<div class="instruction-box">
-<h3 style="color: #d9534f; margin-top: 0;">🚨 Important: You must book manually</h3>
+<div class="instruction-box dark-text">
+<h3 style="color: #d9534f !important; margin-top: 0;">🚨 Important: You must book manually</h3>
 
-<div style="margin: 20px 0;">
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+<div style="margin: 20px 0; color: #000000 !important;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000 !important;">
     <div class="step-number">1</div>
-    <div>
-        <strong>Go to the official website:</strong><br>
-        <a href="https://sede.administracionespublicas.gob.es" target="_blank" style="font-size: 1.1em;">
+    <div style="color: #000000 !important;">
+        <strong style="color: #000000 !important;">Go to the official website:</strong><br>
+        <a href="https://sede.administracionespublicas.gob.es" target="_blank" style="color: #0066cc !important; font-weight: bold; font-size: 1.1em;">
         https://sede.administracionespublicas.gob.es
         </a>
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000 !important;">
     <div class="step-number">2</div>
-    <div>
-        <strong>Navigate manually:</strong><br>
-        • Click "Acceso al sistema de Cita Previa"<br>
-        • Select "Policía - Certificados UE"<br>
-        • Choose your province (Barcelona, Girona, etc.)<br>
-        • Follow the step-by-step process
+    <div style="color: #000000 !important;">
+        <strong style="color: #000000 !important;">Navigate manually:</strong><br>
+        <span style="color: #000000 !important;">• Click "Acceso al sistema de Cita Previa"</span><br>
+        <span style="color: #000000 !important;">• Select "Policía - Certificados UE"</span><br>
+        <span style="color: #000000 !important;">• Choose your province (Barcelona, Girona, etc.)</span><br>
+        <span style="color: #000000 !important;">• Follow the step-by-step process</span>
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000 !important;">
     <div class="step-number">3</div>
-    <div>
-        <strong>Best times to check:</strong><br>
-        • 🕗 8:00-10:00 AM (Monday-Friday)<br>
-        • 🕑 2:00-4:00 PM (Tuesday-Thursday)<br>
-        • 📅 First weekday of each month
+    <div style="color: #000000 !important;">
+        <strong style="color: #000000 !important;">Best times to check:</strong><br>
+        <span style="color: #000000 !important;">• 🕗 8:00-10:00 AM (Monday-Friday)</span><br>
+        <span style="color: #000000 !important;">• 🕑 2:00-4:00 PM (Tuesday-Thursday)</span><br>
+        <span style="color: #000000 !important;">• 📅 First weekday of each month</span>
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start;">
+<div style="display: flex; align-items: flex-start; color: #000000 !important;">
     <div class="step-number">4</div>
-    <div>
-        <strong>Have these ready:</strong><br>
-        • Passport/NIE number<br>
-        • Complete personal details<br>
-        • Email and phone number
+    <div style="color: #000000 !important;">
+        <strong style="color: #000000 !important;">Have these ready:</strong><br>
+        <span style="color: #000000 !important;">• Passport/NIE number</span><br>
+        <span style="color: #000000 !important;">• Complete personal details</span><br>
+        <span style="color: #000000 !important;">• Email and phone number</span>
     </div>
 </div>
 </div>
@@ -206,3 +219,11 @@ st.error("""
 Users must manually navigate and book appointments themselves. We do not automate bookings, 
 bypass security measures, or provide legal advice.
 """)
+
+# Refresh note
+st.markdown("---")
+st.markdown("""
+<div style="text-align: center; color: #666; font-size: 0.9em;">
+🔄 This page updates automatically every 5 minutes
+</div>
+""", unsafe_allow_html=True)
