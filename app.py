@@ -9,7 +9,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for professional look
+# Custom CSS with DARK TEXT for readability
 st.markdown("""
 <style>
     .main-header {
@@ -25,6 +25,10 @@ st.markdown("""
         border-radius: 10px;
         margin: 15px 0;
         height: 100%;
+        color: #000000 !important;
+    }
+    .feature-card h3, .feature-card p, .feature-card li {
+        color: #000000 !important;
     }
     .step-number {
         background-color: #007bff;
@@ -44,6 +48,7 @@ st.markdown("""
         padding: 15px;
         margin: 10px 0;
         border-radius: 5px;
+        color: #000000 !important;
     }
     .office-card {
         background-color: #fff3cd;
@@ -51,6 +56,20 @@ st.markdown("""
         padding: 15px;
         margin: 10px 0;
         border-radius: 8px;
+        color: #000000 !important;
+    }
+    .dark-text {
+        color: #000000 !important;
+    }
+    .instruction-box {
+        background-color: #e7f3ff;
+        padding: 20px;
+        border-radius: 10px;
+        color: #000000 !important;
+        border: 1px solid #b3d9ff;
+    }
+    .instruction-box h4 {
+        color: #000000 !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -75,9 +94,9 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown("""
     <div class="feature-card">
-        <h3>📚 Option 1: Manual Status Guide</h3>
-        <p><strong>Know exactly when and how to check</strong></p>
-        <ul>
+        <h3 style="color: #000000;">📚 Option 1: Manual Status Guide</h3>
+        <p style="color: #000000;"><strong>Know exactly when and how to check</strong></p>
+        <ul style="color: #000000;">
             <li>Best times for each office</li>
             <li>Step-by-step checking process</li>
             <li>Document preparation guides</li>
@@ -89,9 +108,9 @@ with col1:
 with col2:
     st.markdown("""
     <div class="feature-card">
-        <h3>🤝 Option 2: Community Reporting</h3>
-        <p><strong>Learn from others' success</strong></p>
-        <ul>
+        <h3 style="color: #000000;">🤝 Option 2: Community Reporting</h3>
+        <p style="color: #000000;"><strong>Learn from others' success</strong></p>
+        <ul style="color: #000000;">
             <li>Real user success stories</li>
             <li>Recent appointment findings</li>
             <li>Pattern identification</li>
@@ -103,9 +122,9 @@ with col2:
 with col3:
     st.markdown("""
     <div class="feature-card">
-        <h3>🎓 Option 3: Educational Platform</h3>
-        <p><strong>Master the process</strong></p>
-        <ul>
+        <h3 style="color: #000000;">🎓 Option 3: Educational Platform</h3>
+        <p style="color: #000000;"><strong>Master the process</strong></p>
+        <ul style="color: #000000;">
             <li>Complete procedure guides</li>
             <li>Document preparation help</li>
             <li>Legal requirement overviews</li>
@@ -128,6 +147,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.markdown("""
+    <div style="color: #000000;">
     **🕗 Morning Windows:**
     - Monday-Friday: 8:00-10:00 AM
     - Tuesday-Thursday: Most reliable
@@ -136,10 +156,12 @@ with col1:
     **📍 Barcelona Offices:**
     - Police (Via Júlia): 8:15-9:00 AM
     - Extranjería: 9:00-10:00 AM
-    """)
+    </div>
+    """, unsafe_allow_html=True)
 
 with col2:
     st.markdown("""
+    <div style="color: #000000;">
     **🕑 Afternoon Windows:**
     - Tuesday-Thursday: 2:00-4:00 PM  
     - Some offices release cancellations
@@ -149,42 +171,43 @@ with col2:
     - Girona: 8:45 AM consistently
     - Tarragona: 9:00 AM & 4:00 PM
     - Lleida: 8:30 AM daily
-    """)
+    </div>
+    """, unsafe_allow_html=True)
 
 # Quick Action Section
 st.markdown("### ⚡ Ready to Check?")
 st.markdown("""
-<div style="background-color: #e7f3ff; padding: 20px; border-radius: 10px;">
-<h4>🚨 Manual Checking Process:</h4>
+<div class="instruction-box">
+<h4 style="color: #000000;">🚨 Manual Checking Process:</h4>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000;">
     <div class="step-number">1</div>
-    <div>
-        <strong>Click the official link below</strong><br>
+    <div style="color: #000000;">
+        <strong style="color: #000000;">Click the official link below</strong><br>
         You'll be redirected to the government portal
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000;">
     <div class="step-number">2</div>
-    <div>
-        <strong>Navigate manually through the system</strong><br>
+    <div style="color: #000000;">
+        <strong style="color: #000000;">Navigate manually through the system</strong><br>
         Select your procedure and province
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start; margin-bottom: 15px;">
+<div style="display: flex; align-items: flex-start; margin-bottom: 15px; color: #000000;">
     <div class="step-number">3</div>
-    <div>
-        <strong>Check for available time slots</strong><br>
+    <div style="color: #000000;">
+        <strong style="color: #000000;">Check for available time slots</strong><br>
         Be prepared to book immediately if you find one
     </div>
 </div>
 
-<div style="display: flex; align-items: flex-start;">
+<div style="display: flex; align-items: flex-start; color: #000000;">
     <div class="step-number">4</div>
-    <div>
-        <strong>Report your success to help others!</strong><br>
+    <div style="color: #000000;">
+        <strong style="color: #000000;">Report your success to help others!</strong><br>
         Share what worked in our community section
     </div>
 </div>
@@ -236,20 +259,20 @@ success_col1, success_col2 = st.columns(2)
 with success_col1:
     st.markdown("""
     <div class="success-story">
-    <strong>Barcelona Police (Via Júlia)</strong><br>
-    ⏰ Most success: Tuesday 8:30 AM<br>
-    📅 Best results: First week of month<br>
-    🎯 Strategy: Check right at 8:15 AM
+    <strong style="color: #000000;">Barcelona Police (Via Júlia)</strong><br>
+    <span style="color: #000000;">⏰ Most success: Tuesday 8:30 AM</span><br>
+    <span style="color: #000000;">📅 Best results: First week of month</span><br>
+    <span style="color: #000000;">🎯 Strategy: Check right at 8:15 AM</span>
     </div>
     """, unsafe_allow_html=True)
 
 with success_col2:
     st.markdown("""
     <div class="success-story">
-    <strong>Girona Office</strong><br>
-    ⏰ Most success: Weekdays 8:45 AM<br>
-    📅 Consistent morning releases<br>
-    🎯 Strategy: Daily checking at opening
+    <strong style="color: #000000;">Girona Office</strong><br>
+    <span style="color: #000000;">⏰ Most success: Weekdays 8:45 AM</span><br>
+    <span style="color: #000000;">📅 Consistent morning releases</span><br>
+    <span style="color: #000000;">🎯 Strategy: Daily checking at opening</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -266,30 +289,36 @@ edu_col1, edu_col2, edu_col3 = st.columns(3)
 
 with edu_col1:
     st.markdown("""
+    <div style="color: #000000;">
     **📄 NIE Applications**
     - First-time NIE (EX-15)
     - NIE renewal process
     - Required documents
     - Fee payment guide
-    """)
+    </div>
+    """, unsafe_allow_html=True)
 
 with edu_col2:
     st.markdown("""
+    <div style="color: #000000;">
     **🏠 Residence Procedures**  
     - TIE card application
     - EU registration
     - Family reunification
     - Student residence
-    """)
+    </div>
+    """, unsafe_allow_html=True)
 
 with edu_col3:
     st.markdown("""
+    <div style="color: #000000;">
     **📍 Local Registration**
     - Empadronamiento
     - Social security number
     - Health card registration
     - Driver's license exchange
-    """)
+    </div>
+    """, unsafe_allow_html=True)
 
 # Legal Disclaimer
 st.markdown("---")
@@ -303,7 +332,7 @@ by users through official government portals. We connect users with licensed pro
 st.markdown("---")
 st.markdown("""
 <div style="text-align: center; padding: 20px; background-color: #f8f9fa; border-radius: 10px;">
-<h3>Ready to Get Started?</h3>
-<p>Choose your path above or explore our detailed procedures guide!</p>
+<h3 style="color: #000000;">Ready to Get Started?</h3>
+<p style="color: #000000;">Choose your path above or explore our detailed procedures guide!</p>
 </div>
 """, unsafe_allow_html=True)
