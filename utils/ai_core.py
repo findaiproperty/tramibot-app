@@ -19,7 +19,7 @@ class AdvancedImmigrationAI:
         """Use Hugging Face Inference API - FREE tier"""
         try:
             API_URL = "https://api-inference.huggingface.co/models/microsoft/DialoGPT-large"
-            headers = {"Authorization": "Bearer YOUR_HF_TOKEN"}  # Free account
+            headers = {"Authorization": "Bearer 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"}  # Free account
             
             payload = {
                 "inputs": prompt,
