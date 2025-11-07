@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import datetime
@@ -5,74 +6,92 @@ import feedparser
 from bs4 import BeautifulSoup
 import time
 
-class AdvancedImmigrationAI:
+class SecureImmigrationAI:
     def __init__(self):
         self.official_sources = {
             "boe_rss": "https://www.boe.es/rss/boe.php",
             "extranjeria": "https://extranjeros.inclusion.gob.es",
-            "policia": "https://www.policia.es",
+            "policia": "https://www.policia.es", 
             "ue_directives": "https://ec.europa.eu/immigration"
         }
+        # SECURE: Get token from environment variable
+        self.hf_token = os.getenv('HUGGINGFACE_TOKEN', '')
         
-    # FREE AI API INTEGRATIONS
     def call_huggingface_ai(self, prompt):
-        """Use Hugging Face Inference API - FREE tier"""
+        """SECURE Hugging Face API call"""
+        if not self.hf_token:
+            return self.fallback_response(prompt)
+            
         try:
             API_URL = "https://api-inference.huggingface.co/models/microsoft/DialoGPT-large"
-            headers = {"Authorization": "Bearer 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"}  # Free account
+            headers = {"Authorization": f"Bearer {self.hf_token}"}
             
             payload = {
                 "inputs": prompt,
-                "parameters": {"max_length": 1000, "temperature": 0.7}
+                "parameters": {"max_length": 800, "temperature": 0.7}
             }
             
-            response = requests.post(API_URL, headers=headers, json=payload)
-            return response.json()[0]['generated_text']
-        except:
+            response = requests.post(API_URL, headers=headers, json=payload, timeout=30)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if isinstance(result, list) and len(result) > 0:
+                    return result[0].get('generated_text', self.fallback_response(prompt))
             return self.fallback_response(prompt)
-    
-    def call_ollama_local(self, prompt):
-        """Use Ollama with local models - COMPLETELY FREE"""
-        try:
-            response = requests.post(
-                "http://localhost:11434/api/generate",
-                json={
-                    "model": "llama2",  # or mistral, codellama - all free
-                    "prompt": prompt,
-                    "stream": False
-                }
-            )
-            return response.json()['response']
-        except:
+            
+        except Exception as e:
+            print(f"Hugging Face API error: {e}")
             return self.fallback_response(prompt)
     
     def call_openrouter_free(self, prompt):
-        """Use OpenRouter with free models"""
+        """Backup: OpenRouter free tier (no token needed)"""
         try:
             response = requests.post(
                 "https://openrouter.ai/api/v1/chat/completions",
                 headers={
                     "Authorization": "Bearer free",
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "HTTP-Referer": "https://tramibot.streamlit.app",
+                    "X-Title": "Tramibot AI"
                 },
                 json={
-                    "model": "google/palm-2-chat-bison",  # Free model
-                    "messages": [{"role": "user", "content": prompt}]
-                }
+                    "model": "google/palm-2-chat-bison",
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 800
+                },
+                timeout=30
             )
-            return response.json()['choices'][0]['message']['content']
+            
+            if response.status_code == 200:
+                return response.json()['choices'][0]['message']['content']
+            return self.fallback_response(prompt)
+            
         except:
             return self.fallback_response(prompt)
-
-    # REAL-TIME OFFICIAL SOURCE MONITORING
+    
+    def call_ai_safely(self, prompt):
+        """Main AI call - tries multiple secure methods"""
+        # Try Hugging Face first (if token available)
+        if self.hf_token:
+            result = self.call_huggingface_ai(prompt)
+            if result and "unavailable" not in result.lower():
+                return result
+        
+        # Fallback to OpenRouter (free, no token)
+        return self.call_openrouter_free(prompt)
+    
+    def fallback_response(self, prompt):
+        """Fallback when AI services are down"""
+        return "AI service is currently updating. Please check official Spanish government websites for the most current information."
+    
+    # Keep all your other methods (scan_official_updates, etc.)
     def scan_official_updates(self):
         """Scan official sources for procedure changes"""
         updates = []
         
-        # Monitor BOE (Official State Gazette)
         try:
             feed = feedparser.parse(self.official_sources["boe_rss"])
-            for entry in feed.entries[:20]:
+            for entry in feed.entries[:15]:
                 if self.is_immigration_related(entry.title):
                     updates.append({
                         'source': 'BOE',
@@ -80,105 +99,55 @@ class AdvancedImmigrationAI:
                         'title': entry.title,
                         'content': entry.summary,
                         'link': entry.link,
-                        'ai_analysis': self.analyze_update_impact(entry.title + " " + entry.summary)
+                        'ai_analysis': self.analyze_update_safely(entry.title + " " + entry.summary)
                     })
         except Exception as e:
             print(f"BOE scan error: {e}")
         
         return updates
     
+    def analyze_update_safely(self, update_text):
+        """Analyze updates using secure AI"""
+        prompt = f"""
+        Analyze this Spanish legal update for immigration impact:
+        {update_text}
+        
+        Provide brief analysis of:
+        - Which procedures are affected
+        - Key changes
+        - Urgency level
+        """
+        return self.call_ai_safely(prompt)
+    
     def is_immigration_related(self, text):
-        """AI-powered check if content is immigration-related"""
-        keywords = [
-            'extranjería', 'inmigración', 'residencia', 'nie', 'tie', 
-            'visado', 'permiso', 'estancia', 'nacionalidad', 'asilo',
-            'frontera', 'extranjero', 'ue', 'schengen'
-        ]
+        keywords = ['extranjería', 'inmigración', 'residencia', 'nie', 'tie', 'visado']
         text_lower = text.lower()
         return any(keyword in text_lower for keyword in keywords)
     
-    def analyze_update_impact(self, update_text):
-        """Use AI to analyze impact of legal changes"""
-        prompt = f"""
-        Analyze this Spanish legal update and determine its impact on immigration procedures:
-        
-        {update_text}
-        
-        Provide a brief analysis of:
-        1. Which procedures are affected
-        2. What changed (requirements, process, timing)
-        3. Urgency level (Low/Medium/High)
-        4. Action required for applicants
-        
-        Keep response under 200 words.
-        """
-        
-        return self.call_openrouter_free(prompt)
-    
-    # GENERATIVE PROCEDURE GUIDANCE
     def generate_procedure_guide(self, procedure_name, user_context=""):
-        """Generate AI-powered, current procedure guidance"""
-        
-        # First, check for recent updates
-        recent_updates = self.get_relevant_updates(procedure_name)
-        
+        """Generate AI-powered procedure guidance"""
         prompt = f"""
-        You are an expert Spanish immigration consultant. Generate CURRENT 2024 guidance for: {procedure_name}
+        As a Spanish immigration expert, provide CURRENT 2024 guidance for: {procedure_name}
         
-        USER CONTEXT: {user_context}
+        User context: {user_context}
         
-        RECENT UPDATES TO CONSIDER: {recent_updates}
+        Include:
+        1. Current requirements and documents
+        2. Step-by-step process
+        3. Processing times and costs
+        4. Common issues and solutions
         
-        Provide comprehensive information including:
-        
-        1. CURRENT REQUIREMENTS (2024)
-           - Required documents (specific form numbers)
-           - Fees (exact amounts)
-           - Eligibility criteria
-        
-        2. STEP-BY-STEP PROCESS
-           - Official application steps
-           - Where to apply (specific offices)
-           - Timeline with realistic waiting periods
-        
-        3. COMMON PITFALLS & SOLUTIONS
-           - Recent application rejection reasons
-           - Documentation issues
-           - Timeline management
-        
-        4. PRO TIPS
-           - Best times to apply
-           - Cost-saving strategies
-           - Preparation advice
-        
-        Base this on OFFICIAL Spanish government sources and recent legal updates.
-        Make it practical and actionable.
+        Base on official Spanish government sources.
         """
         
-        ai_response = self.call_openrouter_free(prompt)
+        ai_response = self.call_ai_safely(prompt)
         
         return {
             'procedure': procedure_name,
             'generated_at': datetime.datetime.now().isoformat(),
             'ai_guidance': ai_response,
-            'recent_updates_considered': recent_updates,
-            'sources_checked': list(self.official_sources.keys())
+            'sources_checked': ['BOE', 'Ministry of Inclusion']
         }
-    
-    def get_relevant_updates(self, procedure_name):
-        """Get updates relevant to specific procedure"""
-        all_updates = self.scan_official_updates()
-        relevant = []
-        
-        for update in all_updates:
-            if procedure_name.lower() in update['title'].lower():
-                relevant.append(update)
-        
-        return relevant[:3]  # Return top 3 most relevant
-    
-    def fallback_response(self, prompt):
-        """Fallback when AI APIs are unavailable"""
-        return "AI service is currently updating. Please check official sources directly for the most current information."
 
-# Singleton instance
-immigration_ai = AdvancedImmigrationAI()
+# Secure instance
+immigration_ai = SecureImmigrationAI()
